@@ -26,6 +26,9 @@ APenguin::APenguin()
 	GetCharacterMovement()->bIgnoreBaseRotation = true;
 	GetCharacterMovement()->MaxWalkSpeed = 100.f;
 
+	// Need to uncheck in blue print as well
+	bUseControllerRotationYaw = false;
+
 	if (GetMesh() != NULL)
 	{
 
