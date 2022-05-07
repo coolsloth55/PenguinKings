@@ -8,6 +8,8 @@
 // Sets default values
 APenguin::APenguin()
 {
+	isRunning = false;
+
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	AutoPossessPlayer = EAutoReceiveInput::Player0;
@@ -18,9 +20,14 @@ APenguin::APenguin()
 
 	Camera->FieldOfView = 50.f;
 
+	//Setting class variables of the Character movement component
+	GetCharacterMovement()->bOrientRotationToMovement = true;
+	GetCharacterMovement()->bUseControllerDesiredRotation = true;
+	GetCharacterMovement()->bIgnoreBaseRotation = true;
+	GetCharacterMovement()->MaxWalkSpeed = 100.f;
+
 	if (GetMesh() != NULL)
 	{
-		UE_LOG(LogTemp, Log, TEXT("GetMesh::RAN"));
 
 		//Set the location and rotation of the Character Mesh Transform
 		Camera->SetRelativeLocationAndRotation(FVector(0.0f, 0.0f, 120.0f), FQuat(FRotator(-20.0f, 0.0f, 0.0f)));
@@ -33,12 +40,6 @@ APenguin::APenguin()
 		SpringArmComp->bUsePawnControlRotation = true;
 		SpringArmComp->bEnableCameraLag = true;
 	}
-
-	//Setting class variables of the Character movement component
-	GetCharacterMovement()->bOrientRotationToMovement = true;
-	GetCharacterMovement()->bUseControllerDesiredRotation = true;
-	GetCharacterMovement()->bIgnoreBaseRotation = true;
-	GetCharacterMovement()->MaxWalkSpeed = 400.f;
 }
 
 // Called when the game starts or when spawned
@@ -110,18 +111,23 @@ void APenguin::LookUp(float value)
 }
 
 void APenguin::Slide() {
-	UE_LOG(LogTemp, Log, TEXT("Slide"));
-	GetCharacterMovement()->MaxWalkSpeed = 600.f;
+	GetCharacterMovement()->MaxWalkSpeed = 200.f;
 }
 
 void APenguin::Sprint()
 {
-	UE_LOG(LogTemp, Log, TEXT("Sprint"));
-	GetCharacterMovement()->MaxWalkSpeed = 600.f;
+	isRunning = true;
+	GetCharacterMovement()->MaxWalkSpeed = 200.f;
 }
 
 void APenguin::StopSprint()
 {
-	UE_LOG(LogTemp, Log, TEXT("Stop Sprint"));
-	GetCharacterMovement()->MaxWalkSpeed = 400.f;
+	isRunning = false;
+	GetCharacterMovement()->MaxWalkSpeed = 100.f;
+}
+
+//public functions
+bool APenguin::GetIsRunning()
+{
+	return isRunning;
 }

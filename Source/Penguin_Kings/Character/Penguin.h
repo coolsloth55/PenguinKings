@@ -17,6 +17,8 @@ public:
 	// Sets default values for this character's properties
 	APenguin();
 
+	bool GetIsRunning();
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -28,6 +30,9 @@ protected:
 	// Main pawn camera
 	UPROPERTY(EditAnywhere)
 	UCameraComponent* Camera;
+
+	UPROPERTY(EditAnywhere)
+	bool isRunning;
 
 	//Movement functions
 	void MoveVertically(float value);
